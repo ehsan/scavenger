@@ -21,7 +21,7 @@ class CCJob(MRJob):
     if self.options.runner in ['emr', 'hadoop']:
       # Connect to Amazon S3 using anonymous credentials
       conn = boto.connect_s3(anon=True)
-      pds = conn.get_bucket('aws-publicdatasets')
+      pds = conn.get_bucket('commoncrawl')
       # Start a connection to one of the WARC files
       k = Key(pds, line)
       f = warc.WARCFile(fileobj=GzipStreamFile(k))

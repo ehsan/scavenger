@@ -27,7 +27,7 @@ If you would like to create a virtual environment to protect local dependencies:
     pip install -r requirements.txt
 
 To develop locally, you'll need at least three data files -- one for each format the crawl uses.
-These can either be downloaded by running the `get-data.sh` command line program or manually by grabbing the [WARC](https://aws-publicdatasets.s3.amazonaws.com/common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.gz), [WAT](https://aws-publicdatasets.s3.amazonaws.com/common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wat/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.wat.gz), and [WET](https://aws-publicdatasets.s3.amazonaws.com/common-crawl/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wet/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.wet.gz) files.
+These can either be downloaded by running the `get-data.sh` command line program or manually by grabbing the [WARC](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/warc/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.gz), [WAT](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wat/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.wat.gz), and [WET](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2014-35/segments/1408500800168.29/wet/CC-MAIN-20140820021320-00000-ip-10-180-136-8.ec2.internal.warc.wet.gz) files.
 
 ## Running the code
 
@@ -92,7 +92,7 @@ If you are running this for a full fledged job, you will likely want to make the
 
 To run your mrjob task over the entirety of the Common Crawl dataset, you can use the WARC, WAT, or WET file listings found at `CC-MAIN-YYYY-WW/[warc|wat|wet].paths.gz`.
 
-As an example, the [August 2014 crawl](http://commoncrawl.org/august-2014-crawl-data-available/) has 52,849 WARC files listed by [warc.paths.gz](https://aws-publicdatasets.s3.amazonaws.com/common-crawl/crawl-data/CC-MAIN-2014-35/warc.paths.gz).
+As an example, the [August 2014 crawl](http://commoncrawl.org/august-2014-crawl-data-available/) has 52,849 WARC files listed by [warc.paths.gz](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2014-35/warc.paths.gz).
 
 It is highly recommended to run over batches of files at a time and then perform a secondary reduce over those results.
 Running a single job over the entirety of the dataset complicates the situation substantially.
