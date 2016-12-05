@@ -1,5 +1,5 @@
 import gzip
-import os.path as P
+import os.path as Path
 #
 import boto
 import warc
@@ -33,7 +33,7 @@ class CCJob(MRJob):
       f = warc.WARCFile(fileobj=GzipStreamFile(k))
     ## If we're local, use files on the local file system
     else:
-      line = P.join(P.abspath(P.dirname(__file__)), line)
+      line = Path.join(Path.abspath(Path.dirname(__file__)), line)
       print 'Loading local file {}'.format(line)
       f = warc.WARCFile(fileobj=gzip.open(line))
     ###
