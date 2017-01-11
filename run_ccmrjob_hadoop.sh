@@ -11,12 +11,12 @@ if [ -z "$JOB" ] || [ -z "$INPUT" ] || [ -z "$OUTPUT" ]; then
     echo "Arguments:"
     echo "  <job>     CCJob implementation"
     echo "  <input>   input path"
-	echo "  <output>  input path (must not exist)"
+    echo "  <output>  input path (must not exist)"
     echo
     echo "Example:"
-	echo "  $0  word_count  hdfs://.../wet.paths  hdfs:///.../output/"
-	echo
-	echo "Note: don't forget to adapt the number of maps/reduces and the memory requirements"
+    echo "  $0  word_count  hdfs://.../wet.paths  hdfs:///.../output/"
+    echo
+    echo "Note: don't forget to adapt the number of maps/reduces and the memory requirements"
     exit 1
 fi
 
@@ -41,7 +41,7 @@ python $JOB.py \
        --jobconf "mapreduce.output.fileoutputformat.compress=true" \
        --jobconf "mapreduce.job.reduces=$NUM_REDUCES" \
        --jobconf "mapreduce.job.maps=$NUM_MAPS" \
-       --setup 'export PYTHONPATH=$PYTHONPATH:${JOB}_ccmr.tar.gz#/' \
+       --setup 'export PYTHONPATH=$PYTHONPATH:'${JOB}'_ccmr.tar.gz#/' \
        --no-output \
        --cleanup NONE \
        --output-dir "$OUTPUT" \
