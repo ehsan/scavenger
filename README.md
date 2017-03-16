@@ -62,7 +62,7 @@ First, you'll need to get the relevant demo data locally, which can be done by r
 
     ./get-data.sh
     
-If you're on Windows, you just need to download the files listed and place them in the appropriate folders.
+If you're on Windows, you just need to download the files listed and place them in the appropriate folders, so that the input files (`input/test-1.{warc,wat,wet}`) in the examples below contain the correct relative path to the local copies.
 
 To run the jobs locally, you can simply run:
 
@@ -97,7 +97,7 @@ Using option two as shown above, you can then run the script on EMR by running:
 
     python tag_counter_emr.py -r emr --conf-path mrjob.conf --no-output --output-dir out input/test-100.warc
 
-If you are running this for a full fledged job, you will likely want to make the master server a normal instance, as spot instances can disappear at any time.
+this time reading 100 WARC files from Common Crawl's Public Data Set bucket `s3://commoncrawl/`. If you are running this for a full fledged job, you will likely want to make the master server a normal instance, as spot instances can disappear at any time.
 
 ### Running via Hadoop
 
