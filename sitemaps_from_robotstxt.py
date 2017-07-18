@@ -12,7 +12,7 @@ except ImportError:
 
 from mrcc import CCJob
 
-sitemap_regex = re.compile('^sitemap:\s*(.+)$', re.I)
+sitemap_regex = re.compile('^sitemap:\s*(\S+)', re.I)
 
 
 class SitemapExtractor(CCJob):
