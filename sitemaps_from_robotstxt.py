@@ -42,8 +42,11 @@ class SitemapExtractor(CCJob):
                     host = None
                     try:
                         host = urlparse(url).netloc.lower()
-                    except:
-                        logging.warn('Invalid robots.txt URL: {}'.format(url))
+                    except Exception as url_parse_error:
+                        try:
+                            logging.warn('Invalid robots.txt URL: {} - {}'.format(url, url_parse_error))
+                        except UnicodeEncodeError as unicode_error:
+                            logging.warn('Invalid robots.txt URL - {} - {}'.format(url_parse_error, unicode_error))
                         self.increment_counter('commoncrawl', 'invalid robots.txt URL', 1)
                         return
                 if not sitemap_url.startswith('http'):
@@ -56,8 +59,11 @@ class SitemapExtractor(CCJob):
         sitemap_uri = None
         try:
             sitemap_uri = urlparse(key)
-        except:
-            logging.warn('Invalid sitemap URL: {}'.format(key))
+        except Exception as url_parse_error:
+            try:
+                logging.warn('Invalid sitemap URL: {} - {}'.format(key, url_parse_error))
+            except UnicodeEncodeError as unicode_error:
+                logging.warn('Invalid sitemap URL - {} - {}'.format(url_parse_error, unicode_error))
             self.increment_counter('commoncrawl', 'invalid sitemap URL', 1)
             return
         sitemap_host = sitemap_uri.netloc.lower()
