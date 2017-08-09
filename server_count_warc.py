@@ -3,11 +3,14 @@ from mrcc import CCJob
 
 server_regex = re.compile('^server:\s*(.+)$', re.I)
 
+
 class ServerCount(CCJob):
-    '''Count server names in HTTP headers contained in WARC files.
-    
+    """
+    Count server names in HTTP headers contained in WARC files.
+
     Note: If WAT files are available the class ServerAnalysis should be used.
-          WAT files are smaller and faster to process.'''
+          WAT files are smaller and faster to process.
+    """
 
     def process_record(self, record):
         if record['WARC-Type'] != 'response':
@@ -26,4 +29,4 @@ class ServerCount(CCJob):
 
 
 if __name__ == '__main__':
-  ServerCount.run()
+    ServerCount.run()

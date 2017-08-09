@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 JOB="$1"
 INPUT="$2"
@@ -11,10 +11,10 @@ if [ -z "$JOB" ] || [ -z "$INPUT" ] || [ -z "$OUTPUT" ]; then
     echo "Arguments:"
     echo "  <job>     CCJob implementation"
     echo "  <input>   input path"
-    echo "  <output>  input path (must not exist)"
+    echo "  <output>  output path (must not exist)"
     echo
     echo "Example:"
-    echo "  $0  word_count  hdfs://.../wet.paths  hdfs:///.../output/"
+    echo "  $0 word_count hdfs://.../wet.paths  hdfs:///.../output/"
     echo
     echo "Note: don't forget to adapt the number of maps/reduces and the memory requirements"
     exit 1

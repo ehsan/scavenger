@@ -22,7 +22,7 @@ This can all be done using `pip`:
 
 If you would like to create a virtual environment to protect local dependencies:
 
-    virtualenv --no-site-packages env/
+    virtualenv env/
     source env/bin/activate
     pip install -r requirements.txt
 
@@ -62,15 +62,20 @@ First, you'll need to get the relevant demo data locally, which can be done by r
 
     ./get-data.sh
     
-If you're on Windows, you just need to download the files listed and place them in the appropriate folders, so that the input files (`input/test-1.{warc,wat,wet}`) in the examples below contain the correct relative path to the local copies.
+If you're on Windows, you just need to download the files listed and place them in the appropriate folders, so that the input files (`input/test-1.{robots,warc,wat,wet}`) in the examples below contain the correct relative path to the local copies.
 
 To run the jobs locally, you can simply run:
 
-    python tag_counter.py --conf-path mrjob.conf --no-output --output-dir out input/test-1.warc
-    
+    python server_analysis.py --conf-path mrjob.conf --no-output --output-dir output/ input/test-1.wat
+    python server_count_warc.py --conf-path mrjob.conf --no-output --output-dir output/ input/test-1.warc
+    python sitemaps_from_robotstxt.py --conf-path mrjob.conf --no-output --output-dir output/ input/test-1.robots
+    python tag_counter.py --conf-path mrjob.conf --no-output --output-dir output/ input/test-1.warc
+    python unique_server_analysis.py --conf-path mrjob.conf --no-output --output-dir output/ input/test-1.wat
+    python word_count.py --conf-path mrjob.conf --no-output --output-dir output/ input/test-1.wet
+
 Using the 'local' runner simulates more features of Hadoop, such as counters:
 
-    python tag_counter.py -r local --conf-path mrjob.conf --no-output --output-dir out input/test-1.warc
+    python tag_counter.py -r local --conf-path mrjob.conf --no-output --output-dir output/ input/test-1.warc
 
 ### Running via Elastic MapReduce
 
@@ -95,7 +100,7 @@ By default, the configuration file only launches two machines, both using spot i
 
 Using option two as shown above, you can then run the script on EMR by running:
 
-    python tag_counter_emr.py -r emr --conf-path mrjob.conf --no-output --output-dir out input/test-100.warc
+    python tag_counter_emr.py -r emr --conf-path mrjob.conf --no-output --output-dir s3://output/ input/test-100.warc
 
 this time reading 100 WARC files from Common Crawl's Public Data Set bucket `s3://commoncrawl/`. If you are running this for a full fledged job, you will likely want to make the master server a normal instance, as spot instances can disappear at any time.
 
