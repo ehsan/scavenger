@@ -32,6 +32,12 @@ tar cvfz ${JOB}_ccmr.tar.gz *.py
 NUM_MAPS=250
 NUM_REDUCES=10
 
+if [ -n "$S3_LOCAL_TEMP_DIR" ]; then
+	S3_LOCAL_TEMP_DIR="--s3_local_temp_dir=$S3_LOCAL_TEMP_DIR"
+else
+	S3_LOCAL_TEMP_DIR=""
+fi
+
 python $JOB.py \
        -r hadoop \
        --jobconf "mapreduce.map.memory.mb=1200" \
@@ -45,5 +51,6 @@ python $JOB.py \
        --setup 'export PYTHONPATH=$PYTHONPATH:'${JOB}'_ccmr.tar.gz#/' \
        --no-output \
        --cleanup NONE \
+       $S3_LOCAL_TEMP_DIR \
        --output-dir "$OUTPUT" \
        "$INPUT"
