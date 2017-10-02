@@ -121,7 +121,7 @@ We also recommend having [N map jobs for the N files](https://groups.google.com/
 You'll also want to place your results in an S3 bucket instead of having them streamed back to your local machine.
 For full details on this, refer to the mrjob documentation.
 
-Note about locally buffering WARC/WAT/WET files: The default temp folder (usually /tmp/) must be large enough to buffer content from S3 for all task running on a machine. You might point it explicitly to a directory on a volume large enough by passing `--s3_local_temp_dir=/path/to/tmp`.
+Note about locally buffering WARC/WAT/WET files: The default temp folder (set via hadoop.tmp.dir, default /tmp/) must be large enough to buffer content from S3 for all task running on a machine. You might point it explicitly to a directory on a volume large enough by passing `--s3_local_temp_dir=/path/to/tmp`.
 
 ## Running with PyPy
 
