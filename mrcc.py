@@ -1,4 +1,5 @@
 import gzip
+import logging
 import os.path as Path
 import boto
 import warc
@@ -6,6 +7,7 @@ from boto.s3.key import Key
 from gzipstream import GzipStreamFile
 from mrjob.job import MRJob
 
+log = logging.getLogger(__name__)
 
 class CCJob(MRJob):
     def configure_options(self):
@@ -31,7 +33,7 @@ class CCJob(MRJob):
         # If we're local, use files on the local file system
         else:
             line = Path.join(Path.abspath(Path.dirname(__file__)), line)
-            print 'Loading local file {}'.format(line)
+            log.info('Loading local file {}'.format(line))
             ccfile = warc.WARCFile(fileobj=gzip.open(line))
 
         for i, record in enumerate(ccfile):
