@@ -104,5 +104,5 @@ ENV/
 crawl-data/
 output/
 
-# vscode
+# Visual Studio Code configuration folder
 .vscode/
