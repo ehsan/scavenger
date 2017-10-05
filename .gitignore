@@ -103,3 +103,6 @@ ENV/
 .idea/
 crawl-data/
 output/
+
+# Visual Studio Code configuration folder
+.vscode/
