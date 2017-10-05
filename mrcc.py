@@ -11,7 +11,7 @@ from mrjob.util import log_to_stream
 # Set up logging
 # Duplicate log messages caused by: https://github.com/Yelp/mrjob/issues/1551
 LOG = logging.getLogger(__name__)
-log_to_stream(format="%(asctime)s;%(levelname)s;%(message)s")
+log_to_stream(format="%(asctime)s;%(levelname)s;%(message)s", name=__name__)
 
 class CCJob(MRJob):
     """
