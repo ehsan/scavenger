@@ -1,12 +1,18 @@
 import gzip
 import logging
 import os.path as Path
+
+from tempfile import TemporaryFile
+
+import boto3
+import botocore
 import warc
-import boto
-from boto.s3.key import Key
-from gzipstream import GzipStreamFile
+
 from mrjob.job import MRJob
 from mrjob.util import log_to_stream
+
+from gzipstream import GzipStreamFile
+
 
 # Set up logging - must ensure that log_to_stream(...) is called only once
 # to avoid duplicate log messages (see https://github.com/Yelp/mrjob/issues/1551).
@@ -22,6 +28,9 @@ class CCJob(MRJob):
         super(CCJob, self).configure_options()
         self.pass_through_option('--runner')
         self.pass_through_option('-r')
+        self.add_passthrough_option('--s3_local_temp_dir',
+                                    help='local temporary directory to buffer content from S3',
+                                    default=None)
 
     def process_record(self, record):
         """
@@ -39,12 +48,35 @@ class CCJob(MRJob):
         # If we're on EC2 or running on a Hadoop cluster, pull files via S3
         if self.options.runner in ['emr', 'hadoop']:
             # Connect to Amazon S3 using anonymous credentials
-            conn = boto.connect_s3(anon=True)
-            pds = conn.get_bucket('commoncrawl')
-            # Start a connection to one of the WARC files
+            boto_config = botocore.client.Config(
+                signature_version=botocore.UNSIGNED,
+                read_timeout=180,
+                retries={'max_attempts' : 20})
+            s3client = boto3.client('s3', config=boto_config)
+            # Verify bucket
+            try:
+                s3client.head_bucket(Bucket='commoncrawl')
+            except botocore.exceptions.ClientError as exception:
+                LOG.error('Failed to access bucket "commoncrawl": %s', exception)
+                return
+            # Check whether WARC/WAT/WET input exists
+            try:
+                s3client.head_object(Bucket='commoncrawl',
+                                     Key=line)
+            except botocore.client.ClientError as exception:
+                LOG.error('Input not found: %s', line)
+                return
+            # Start a connection to one of the WARC/WAT/WET files
             LOG.info('Loading s3://commoncrawl/%s', line)
-            k = Key(pds, line)
-            ccfile = warc.WARCFile(fileobj=GzipStreamFile(k))
+            try:
+                temp = TemporaryFile(mode='w+b',
+                                     dir=self.options.s3_local_temp_dir)
+                s3client.download_fileobj('commoncrawl', line, temp)
+            except botocore.client.ClientError as exception:
+                LOG.error('Failed to download %s: %s', line, exception)
+                return
+            temp.seek(0)
+            ccfile = warc.WARCFile(fileobj=(GzipStreamFile(temp)))
         # If we're local, use files on the local file system
         else:
             line = Path.join(Path.abspath(Path.dirname(__file__)), line)
