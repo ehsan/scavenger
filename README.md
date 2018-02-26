@@ -90,19 +90,19 @@ The three job examples in this repository (`tag_counter.py`, `server_analysis.py
 By default, this module will not be present when you run the examples on Elastic MapReduce, so you have to include it explicitly.
 You have two options:
 
-1. [Deploy your source tree as a tar ball](http://pythonhosted.org/mrjob/guides/setup-cookbook.html#putting-your-source-tree-in-pythonpath)
+1. [Deploy your source tree as a tar ball](http://pythonhosted.org/mrjob/guides/setup-cookbook.html#uploading-your-source-tree-as-an-archive)
 2. Copy-paste the code from mrcc.py into the job example that you are trying to run:
 
         cat mrcc.py tag_counter.py | sed "s/from mrcc import CCJob//" > tag_counter_emr.py
 
 To run the job on Amazon Elastic MapReduce (their automated Hadoop cluster offering), you need to add your AWS access key ID and AWS access key to `mrjob.conf`.
-By default, the configuration file only launches two machines, both using spot instances to be cost effective.
+By default, the configuration file only launches two machines, both using spot instances to be cost effective. If you are running this for a full fledged job, you will likely want to make the master server a normal instance, as spot instances can disappear at any time.
 
 Using option two as shown above, you can then run the script on EMR by running:
 
-    python tag_counter_emr.py -r emr --conf-path mrjob.conf --no-output --output-dir s3://output/ input/test-100.warc
+    python tag_counter_emr.py -r emr --conf-path mrjob.conf --no-output --output-dir s3://my-output-bucket/path/ input/test-100.warc
 
-this time reading 100 WARC files from Common Crawl's Public Data Set bucket `s3://commoncrawl/`. If you are running this for a full fledged job, you will likely want to make the master server a normal instance, as spot instances can disappear at any time.
+this time reading 100 WARC files from Common Crawl's Public Data Set bucket `s3://commoncrawl/`. The output is written to S3 - do not forget to point the output (`s3://my-output-bucket/path/` is just a dummy) to a S3 bucket and path you have write permissions. The output directory must not exist!
 
 ### Running via Hadoop
 
