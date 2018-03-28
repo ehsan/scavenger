@@ -54,7 +54,7 @@ class SitemapExtractor(CCJob):
                     # first sitemap found: set base URL and get host from URL
                     url = record['WARC-Target-URI']
                     try:
-                        host = urlparse(url).netloc.lower()
+                        host = urlparse(url).netloc.lower().lstrip('.')
                     except Exception as url_parse_error:
                         try:
                             LOG.warn('Invalid robots.txt URL: %s - %s',
@@ -93,7 +93,7 @@ class SitemapExtractor(CCJob):
             self.increment_counter('commoncrawl', 'invalid sitemap URL', 1)
             return
 
-        sitemap_host = sitemap_uri.netloc.lower()
+        sitemap_host = sitemap_uri.netloc.lower().lstrip('.')
         cross_submit_hosts = set()
 
         for robots_txt_hosts in values:
