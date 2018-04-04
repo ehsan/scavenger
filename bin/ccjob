@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BASE_PATH="`dirname \"$0\".`"/..
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 job_name ..."
+    exit
+fi
+
+python $BASE_PATH/scavenger/job.py -r emr --conf-path=$BASE_PATH/mrjob.conf ${@:1}
