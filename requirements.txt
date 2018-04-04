@@ -1,4 +1,5 @@
 boto3
 mrjob
+simplejson
 warc
 https://github.com/commoncrawl/gzipstream/archive/master.zip
