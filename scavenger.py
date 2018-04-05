@@ -8,6 +8,7 @@ class Scavenger(CCJob):
     hashes = list()
 
     def configure_options(self):
+        super(Scavenger, self).configure_options()
         try:
             samples = "https://raw.githubusercontent.com/ehsan/scavenger/master/data/samples.txt"
             with urllib2.urlopen(samples) as file:
