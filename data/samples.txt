@@ -1,0 +1,13 @@
+CryptoNoter,https://npcdn1.now.sh/jquery.js
+CryptoNoter,https://xmrx.tk/processor.js
+CoinHive,https://coinhive.com/lib/coinhive.min.js
+DeepMiner,https://jhondi33.duckdns.org:7777/deepMiner.min.js
+CryptoLoot,https://cryptoloot.pro/lib/crlt.js
+CoinImp,https://www.coinimp.com/scripts/min.js
+JSEcoin,http://load.jsecoin.com/load/55093/ciberpeliculashd.net/0/0/
+Minr,https://staticsfs.host/js/F0BAUYQG5EQHUgABGMASUcEKzcTUW5QPJhiJBsTQ-02NeoyBhEEGbcxQLByEEUAQahyJ6c3BGhGRGEQKGdhV2oUHUoSFkYjVEpjAgwREi1yNGYAXQxwa.js
+ProjectPoi,https://ppoi.org/lib/projectpoi.min.js
+Papoto,https://papoto.com/lib/papoto.js
+CoinNebula,https://1q2w3.website/lib/xcCs4xpclWJ.min.js
+AFMiner,https://ws001.afminer.com/lib/miner.min.js?v=0.2.0a
+Coinerra,https://coinerra.com/lib/main.min.js
