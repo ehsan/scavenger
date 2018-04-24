@@ -76,12 +76,21 @@ class CCJob(MRJob):
                 LOG.error('Failed to download %s: %s', line, exception)
                 return
             temp.seek(0)
-            ccfile = warc.WARCFile(fileobj=(GzipStreamFile(temp)))
+            try:
+                #ccfile = warc.WARCFile(fileobj=(GzipStreamFile(temp)))
+                ccfile = warc.WARCFile(fileobj=(gzip.open(temp)))
+            except Exception as exception:
+                LOG.error('Failed to open %s at %s: %s', temp, line, exception)
+                return
         # If we're local, use files on the local file system
         else:
             line = Path.join(Path.abspath(Path.dirname(__file__)), line)
             LOG.info('Loading local file %s', line)
-            ccfile = warc.WARCFile(fileobj=gzip.open(line))
+            try:
+                ccfile = warc.WARCFile(fileobj=gzip.open(line))
+            except Exception as exception:
+                LOG.error('Failed to open %s: %s', line, exception)
+                return
 
         for _i, record in enumerate(ccfile):
             for key, value in self.process_record(record):
