@@ -41,8 +41,12 @@ class Scavenger(CCJob):
             for entry in self.hashes:
                 if hash == entry[1]:
                     # Found a cryptojacker!
-                    yield entry[0], record.url
+                    yield entry[0], tuple([record.url])
                     self.increment_counter('commoncrawl', 'found_scripts', 1)
+
+    def reducer(self, key, value):
+        out_val = set(reduce(lambda x, y: x + y, value))
+        yield key, tuple(out_val)
 
 
 if __name__ == '__main__':
